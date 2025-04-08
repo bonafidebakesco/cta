@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Animated Hero</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: 'Inter', sans-serif;
+            background: #fffaf4;
+        }
+
+        .parent {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
+            height: 500px;
+        }
+
+        .div1 {
+            grid-row: 1 / 3;
+            grid-column: 1 / 2;
+            background: #f1f8fb;
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-dynamic {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-left {
+            max-width: 50%;
+        }
+
+        .hero-tagline {
+            color: #ffae00;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .hero-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #111;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .hero-bullets {
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+            opacity: 0;
+            transform: translateX(30px);
+            animation: slideIn 0.6s forwards;
+            line-height: 2;
+        }
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .hero-bullets li {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .hero-image img {
+            max-width: 280px;
+            height: auto;
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .fade-in {
+            opacity: 1 !important;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+
+        .div2, .div3 {
+            padding: 24px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .div2 {
+            background: #eaf4ea;
+        }
+
+        .div3 {
+            background: #fceeee;
+        }
+
+        .promo-text h3 {
+            font-size: 1.4rem;
+            color: #111;
+            margin-bottom: 5px;
+        }
+
+        .promo-text p {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .promo-text a {
+            font-size: 0.9rem;
+            color: #444;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .div2 img, .div3 img {
+            max-width: 100px;
+            border-radius: 8px;
+        }
+        @media (max-width: 768px) {
+            .parent {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+                height: auto;
+            }
+
+            .div1 {
+                grid-row: auto;
+                grid-column: auto;
+                padding: 20px;
+            }
+
+            .hero-dynamic {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .hero-left {
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .hero-title {
+                font-size: 1.6rem;
+            }
+
+            .hero-bullets {
+                font-size: 1.2rem;
+                padding: 0;
+            }
+
+            .hero-bullets li {
+                margin-bottom: 8px;
+                list-style-position: inside;
+            }
+
+            .hero-image img {
+                max-width: 200px;
+            }
+
+            .div2, .div3 {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .div2 img, .div3 img {
+                margin-top: 10px;
+            }
+        }
+        @media (max-width: 9px) {
+            .parent {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+
+            .div1 {
+                grid-column: 1 / 2;
+                grid-row: auto;
+                padding: 20px;
+            }
+
+            .div2, .div3 {
+                flex-direction: row;
+                justify-content: space-between;
+                gap: 20px;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 60px) {
+            body {
+                padding: 20px;
+            }
+
+            .hero-title {
+                font-size: 1.6rem;
+            }
+
+            .hero-bullets {
+                font-size: 1.2rem;
+            }
+
+            .promo-text h3 {
+                font-size: 1.2rem;
+            }
+
+            .promo-text p, .promo-text a {
+                font-size: 0.9rem;
+            }
+
+            .div2 img, .div3 img {
+                max-width: 80px;
+            }
+
+            .hero-dynamic {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .hero-image {
+                width: 100%;
+                text-align: center;
+            }
+
+            .hero-left {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="parent">
+    <div class="div1">
+        <div class="hero-dynamic">
+            <div class="hero-left">
+                <div class="hero-tagline" id="hero-tagline">100% Natural</div>
+                <h1 class="hero-title" id="hero-title">Loading...</h1>
+                <ul class="hero-bullets" id="hero-bullets"></ul>
+            </div>
+            <div class="hero-image">
+                <img id="hero-img" src="" alt="Hero image">
+            </div>
+        </div>
+    </div>
+
+    <div class="div2">
+        <div class="promo-text">
+            <h3>20% Off</h3>
+            <p>Cookies & Brownies</p>
+            <a href="#">Shop Collection →</a>
+        </div>
+        <img src="https://placehold.co/100x100/91cfa7/000?text=Bakes" alt="Bakes">
+    </div>
+
+    <div class="div3">
+        <div class="promo-text">
+            <h3>15% Off</h3>
+            <p>Baked Products</p>
+            <a href="#">Shop Collection →</a>
+        </div>
+        <img src="https://placehold.co/100x100/f9d2d2/000?text=Sale" alt="Summer Sale">
+    </div>
+</div>
+
+<script>
+    const groups = [
+        {
+            title: "Welcome to BonaFideBakes.Co",
+            tagline: "Baked Honest. Baked Good.",
+            bullets: [
+                "Carefully Chosen Ingredient ",
+                "Crafted with Love & Passion",
+                "Bringing You Wholesome Goodness"
+            ],
+            img: "https://placehold.co/300x500/fff1e6/000000?text=BonaFideBakesCo"
+        },
+        {
+            title: "Healthy Choices, Always",
+            tagline: "Indulgence Without Guilt",
+            bullets: [
+                "No Artificial Preservatives or Colors",
+                "Bakes committed for Health & Wellness",
+                "Low Sugar, High Taste"
+            ],
+            img: "https://placehold.co/300x500/dfffe2/000000?text=Healthy+Inside+Out"
+        },
+        {
+            title: "Authentic, Sustainable & Responsible",
+            tagline: "Better for You. Better for the Planet.",
+            bullets: [
+                "Locally Sourced Ingredients",
+                "Eco-Friendly Packaging",
+                "Minimal Food Wastage Policy"
+            ],
+            img: "https://placehold.co/300x500/e1ffe6/000000?text=We+Care+for+Earth"
+        },
+        {
+            title: "Craftsmanship You Can Taste",
+            tagline: "Baking is Our Love Language",
+            bullets: [
+                "Small Batches, Fresh Everyday",
+                "Tradition Meets Innovation",
+                "Curated by Passionate Bakers"
+            ],
+            img: "https://placehold.co/300x500/fcebd4/000000?text=Handcrafted+with+Care"
+        },
+        {
+            title: "Rooted in Community",
+            tagline: "Made for All. Committed by many.",
+            bullets: [
+                "100% Fair and Healthy Ingredients",
+                "Sourced directly from Producers",
+                "Ensuring Health, Quality & Fairness"
+            ],
+            img: "https://placehold.co/300x500/fff9db/000000?text=Community+First"
+        }
+    ];
+    let index = 0;
+
+    function showGroup(i) {
+        const group = groups[i];
+        const titleEl = document.getElementById('hero-title');
+        const imgEl = document.getElementById('hero-img');
+        const bulletContainer = document.getElementById('hero-bullets');
+        const taglineEl = document.querySelector('#hero-tagline');
+
+        // Reset bullets
+        bulletContainer.innerHTML = '';
+        titleEl.classList.remove('fade-in');
+        imgEl.classList.remove('fade-in');
+
+        // Load new content
+        titleEl.textContent = group.title;
+        imgEl.src = group.img;
+        taglineEl.textContent = group.tagline;
+
+        setTimeout(() => {
+            titleEl.classList.add('fade-in');
+            imgEl.classList.add('fade-in');
+        }, 200);
+
+        // Show bullets one by one
+        group.bullets.forEach((bullet, idx) => {
+            const li = document.createElement('li');
+            li.textContent = bullet;
+            bulletContainer.appendChild(li);
+            setTimeout(() => {
+                li.classList.add('fade-in');
+            }, 1000 + idx * 700);
+        });
+
+        // Loop to next group
+        setTimeout(() => {
+            index = (index + 1) % groups.length;
+            showGroup(index);
+        }, 1000 + group.bullets.length * 700 + 2000); // Total time per group
+    }
+
+    // Start on load
+    window.onload = () => showGroup(index);
+</script>
+
+</body>
+</html>
